@@ -18,7 +18,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
       - name: Setup Application Runtime
-        uses: yumemi-inc/flutter-mobile-project-template/blob/main/.github/actions/setup-application-runtime/action.yaml@89db401ba2040f9c3f982823d18895ca6a1fc5e4
+        uses: ./.github/actions/setup-application-runtime
       - name: Create Issues for Package Update 
         run: melos run ci:update:issue --no-select
         shell: bash
