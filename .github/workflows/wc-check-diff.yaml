@@ -1,0 +1,37 @@
+name: Check generated code is latest
+
+on:
+  workflow_call:
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Application Runtime
+        uses: ./.github/actions/setup-application-runtime
+
+      # https://github.com/actions/cache
+      - name: Cache build runner
+        id: cache-build-runner
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        env:
+          cache-name: build-runner
+        with:
+          path: |
+            **/.dart_tool/build
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/pubspec.lock') }}
+
+      - name: Regenerate code
+        run: melos run gen --no-select
+
+      - name: Check difference
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
