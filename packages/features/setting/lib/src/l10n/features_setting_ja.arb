@@ -1,0 +1,9 @@
+{
+  "@@locale": "ja",
+  "settingAppBar": "設定",
+  "settingThemeSetting": "テーマ設定",
+  "settingAbout": "FlutterMobileTemplate について",
+  "settingOpenSourceLicenses": "オープンソースライセンス",
+  "settingLibrariesWeUse": "使用しているライブラリ",
+  "settingVersion": "バージョン"
+}

@@ -1,1 +1,1 @@
-# gh-test
+docs/ja/GET_STARTED.md
