@@ -1,0 +1,26 @@
+name: Create issues for package update
+
+on:
+  workflow_dispatch: ## TODO: jobsの内容が問題なければ、cronに書き換え
+
+jobs:
+  runs:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Create Issues at Initialization
+        run: gh issue --repo ${{ github.repository }} create --title "Issue title" --body "Issue body"
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         
+      - name: Setup Application Runtime
+        uses: yumemi-inc/flutter-mobile-project-template/blob/main/.github/actions/setup-application-runtime/action.yaml@89db401ba2040f9c3f982823d18895ca6a1fc5e4
+      - name: Create Issues for Package Update 
+        run: melos run ci:update:issue --no-select
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
