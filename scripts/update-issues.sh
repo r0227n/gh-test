@@ -2,7 +2,7 @@
 
 main() {
     # .packageと.resolvable.versionを抽出
-    package_list=$(dart pub outdated --json | jq -c '[.packages[] | {package: .package, version: .resolvable.version}]')
+    package_list=$(dart pub outdated --json | jq -c '[.packages[] | select(.kind == "dev") | {package: .package, version: .resolvable.version}]')
 
     if [ -z "$package_list" ] || [ "$package_list" = '[]' ]; then
         echo "No outdated dev packages found."
