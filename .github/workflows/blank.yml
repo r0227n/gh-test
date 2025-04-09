@@ -10,12 +10,6 @@ jobs:
       # https://github.com/actions/checkout
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-
-      - name: Create Issues at Initialization
-        run: gh issue --repo ${{ github.repository }} create --title "Issue title" --body "Issue body"
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
       - name: Setup Application Runtime
         uses: ./.github/actions/setup-application-runtime

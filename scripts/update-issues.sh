@@ -43,20 +43,18 @@ main() {
 
         compare_result=$(compare_versions "$current_version" "$resolvable_version")
         if [ $compare_result -eq 1 ]; then
-            echo "continue"
             continue;
         elif [ $compare_result -eq 2 ]; then
             echo "package: $package_name error /  current_version: $current_version > resolvable_version: $resolvable_version"
             exit 1
         fi
 
-        echo "run"
 
       
-        Issueの命名規則: package_name / resolvable_version
-        例: build_runner / 2.8.23
+        # Issueの命名規則: package_name / resolvable_version
+        # 例: build_runner / 2.8.23
 
-        issuesの中から、命名規則に則った、package_nameとresolvable_versionが一致するものを探す
+        # issuesの中から、命名規則に則った、package_nameとresolvable_versionが一致するものを探す
         matching_issue=$(echo "$issues" | jq -r --arg package_name "$package_name" --arg resolvable_version "$resolvable_version" '.[] | select(.title == ($package_name + " / " + $resolvable_version)) | .title')
 
         
